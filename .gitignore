@@ -37,6 +37,7 @@ vignettes/*.pdf
 # codigo fonte de relatórios ficam em outa página
 docs/*.rmd
 docs/*.qmd
+data/temp/
 
 *.knit.md
 
