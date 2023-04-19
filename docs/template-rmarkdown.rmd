@@ -1,40 +1,45 @@
 ---
 title: "Título do relatório"
 subtitle: "Subtítulo"
-author: "Glória Perez"
+author: "Manoel Carlos"
+date: "`r format(Sys.Date(), '%d.%b.%Y')`"
+fig_width: 11
+fig_height: 7
 output:
   html_document:
+    highlight: pygments
+    css: "style-rmarkdown.css"
     theme: cosmo
     toc: true
     toc_float:
       collapsed: false
-    number_sections: true
+    number_sections: false
     df_print: paged
-    code_folding: show
+    code_folding: hide
 #    self_contained: false # Descomente caso deseje incluir gráficos usando GoogleVis
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
-  warning = FALSE
+  warning = FALSE,
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
 )
 options(scipen = 9999)
 ```
 
-```{r}
-#| label: libs-and-sources
+```{r libs-and-sources}
 library(tidyverse)
 library(here)
 library(palmerpenguins)
 library(DT)
+format(Sys.time(), '%d.%b.%Y às %H:%M:%S')
 source(here("src/00-plot-aesthetics.R"), encoding = "utf-8")
-Sys.getenv("RSTUDIO_PANDOC")
-rmarkdown::pandoc_available()
-installr::install_pandoc()
-Sys.getenv("PATH")
-system("pandoc")
 ```
+
+Última atualização:</br>`r format(Sys.time(), '%d.%m.%Y às %H:%M:%S')`
 
 ## Resumo
 
@@ -52,7 +57,7 @@ Principais resultados:
 
 ### Dataset
 
-```{r label="print-dataset"}
+```{r print-dataset}
 
 iris %>%
   datatable(
@@ -66,8 +71,7 @@ iris %>%
 
 ### Gráfico
 
-```{r}
-#| label: plot-iris
+```{r plot-iris}
 
 iris %>%
   ggplot(aes(
@@ -89,10 +93,7 @@ iris %>%
 
 Algumas vezes precisamos exibir o código, podemos fazer assim:
 
-```{r}
-#| label: um-codigo-que-precisa-aparecer-no-report
-#| code-fold: false
-#| message: true
+```{r um-codigo-que-precisa-aparecer-no-report, class.source = "fold-show", message=TRUE}
 
 # testando uma função:
 awesome_function <- function(x) {
@@ -108,4 +109,57 @@ awesome_function(30L)
 
 # filtando um dataset
 iris2 <- iris %>% tidylog::filter(Species == "setosa")
+```
+
+## Usando abas {.tabset}
+
+### Pontos
+
+```{r plot-pontos}
+
+iris %>%
+  ggplot(aes(
+    x = Petal.Length,
+    y = Petal.Width,
+    fill = Species,
+    color = after_scale(colorspace::darken(fill, .4))
+  )) +
+  geom_point(shape = 21, size = 3) +
+  scale_fill_manual(values = c(
+    "virginica" = cores_tb[["azul"]],
+    "versicolor" = cores_tb[["laranja"]],
+    "setosa" = cores_tb[["cinza_claro"]]
+  )) +
+  labs(
+    title = "Um gráfico importante"
+  )
+```
+
+### Colunas
+
+```{r plot-bars}
+iris %>%
+  group_by(Species) %>%
+  summarise(across(where(is.double), mean, .names = "{.col}")) %>%
+  pivot_longer(-Species) %>%
+  mutate(
+    Species = reorder(Species, value),
+    name = reorder(name, value)
+  ) %>%
+  ggplot(aes(
+    x = Species,
+    y = value,
+    fill = name,
+    color = after_scale(colorspace::darken(fill, .4))
+  )) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(
+    "Sepal.Length" = cores_tb[["azul"]],
+    "Petal.Length" = cores_tb[["laranja"]],
+    "Sepal.Width" = cores_tb[["cinza_quase_branco"]],
+    "Petal.Width" = cores_tb[["cinza_claro"]]
+  )) +
+  labs(
+    title = "Média de Iris"
+  )
 ```
