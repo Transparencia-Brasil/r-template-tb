@@ -30,7 +30,7 @@ format:
     embed-resources: true
     theme:
           light: cosmo
-          dark: cosmo
+          dark: darkly
 knitr:
   opts_chunk:
     echo: true
@@ -176,6 +176,8 @@ iris %>%
 ### Colunas
 
 ```{r}
+#| label: plot-bars
+
 iris %>%
   group_by(Species) %>%
   summarise(across(where(is.double), mean, .names = "{.col}")) %>%
