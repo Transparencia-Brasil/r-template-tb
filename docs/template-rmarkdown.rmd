@@ -1,0 +1,111 @@
+---
+title: "Título do relatório"
+subtitle: "Subtítulo"
+author: "Glória Perez"
+output:
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+    number_sections: true
+    df_print: paged
+    code_folding: show
+#    self_contained: false # Descomente caso deseje incluir gráficos usando GoogleVis
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE
+)
+options(scipen = 9999)
+```
+
+```{r}
+#| label: libs-and-sources
+library(tidyverse)
+library(here)
+library(palmerpenguins)
+library(DT)
+source(here("src/00-plot-aesthetics.R"), encoding = "utf-8")
+Sys.getenv("RSTUDIO_PANDOC")
+rmarkdown::pandoc_available()
+installr::install_pandoc()
+Sys.getenv("PATH")
+system("pandoc")
+```
+
+## Resumo
+
+O objetivo deste relatório é...
+
+Principais resultados:
+
+- Destaque 1.
+- Destaque 2.
+- ...
+
+## Análise
+
+`r stringi::stri_rand_lipsum(1)`
+
+### Dataset
+
+```{r label="print-dataset"}
+
+iris %>%
+  datatable(
+    rownames = FALSE,
+    filter = "top",
+    escape = FALSE,
+    options = list(pageLength = 10, searchHighlight = TRUE)
+  ) %>%
+  formatStyle(columns = 1:5, fontSize = "80%")
+```
+
+### Gráfico
+
+```{r}
+#| label: plot-iris
+
+iris %>%
+  ggplot(aes(
+    x = Petal.Length,
+    y = Petal.Width,
+    fill = Species,
+    color = after_scale(colorspace::darken(fill, .4))
+  )) +
+  geom_point(shape = 21, size = 3) +
+  scale_fill_manual(values = c(
+    "virginica" = cores_tb[["azul"]],
+    "versicolor" = cores_tb[["laranja"]],
+    "setosa" = cores_tb[["cinza_claro"]]
+  )) +
+  labs(
+    title = "Um gráfico importante"
+  )
+```
+
+Algumas vezes precisamos exibir o código, podemos fazer assim:
+
+```{r}
+#| label: um-codigo-que-precisa-aparecer-no-report
+#| code-fold: false
+#| message: true
+
+# testando uma função:
+awesome_function <- function(x) {
+  stopifnot(is.integer(x))
+  a <- x + 10L
+  b <- x + 11L
+  c <- a + b
+  message("\nSomamos a com b!\n")
+  return(c)
+}
+
+awesome_function(30L)
+
+# filtando um dataset
+iris2 <- iris %>% tidylog::filter(Species == "setosa")
+```
