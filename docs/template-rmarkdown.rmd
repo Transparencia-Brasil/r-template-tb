@@ -30,6 +30,8 @@ knitr::opts_chunk$set(
 options(scipen = 9999)
 ```
 
+Última atualização:</br>`r format(Sys.time(), '%d.%m.%Y às %H:%M:%S')`
+
 ```{r libs-and-sources}
 library(tidyverse)
 library(here)
@@ -38,8 +40,6 @@ library(DT)
 format(Sys.time(), '%d.%b.%Y às %H:%M:%S')
 source(here("src/00-plot-aesthetics.R"), encoding = "utf-8")
 ```
-
-Última atualização:</br>`r format(Sys.time(), '%d.%m.%Y às %H:%M:%S')`
 
 ## Resumo
 
@@ -55,7 +55,9 @@ Principais resultados:
 
 `r stringi::stri_rand_lipsum(1)`
 
-### Dataset
+### Datasets
+
+Foram utilizados dados de espécies de pinguins coletados entre os anos de *2014 e 2020*.
 
 ```{r print-dataset}
 
@@ -163,3 +165,19 @@ iris %>%
     title = "Média de Iris"
   )
 ```
+
+
+## Referências
+
+É importante que um relatório contenha:
+
+* Contexto/objetivo do relatório
+* Breve descrição e/ou dicionário dos dados utilizados
+* Demarcação/limitação temporal do recorte de dados utilizados
+* Análise em si (não apenas plots)
+
+
+E até opcionais:
+
+* Highlights/lowlights do processo
+* Referências técnicas ou de negócio

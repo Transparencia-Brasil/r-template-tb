@@ -67,7 +67,7 @@ Principais resultados:
 
 `r stringi::stri_rand_lipsum(1)`
 
-### Dataset
+### Datasets
 
 ```{r}
 #| label: print-dataset
@@ -264,3 +264,20 @@ Plot.rectY(filtered,
   }
 )
 ```
+
+
+
+## Referências
+
+É importante que um relatório contenha:
+
+* Contexto/objetivo do relatório
+* Breve descrição e/ou dicionário dos dados utilizados
+* Demarcação/limitação temporal do recorte de dados utilizados
+* Análise em si (não apenas plots)
+
+
+E até opcionais:
+
+* Highlights/lowlights do processo
+* Referências técnicas ou de negócio
