@@ -1,11 +1,25 @@
 # r-template-tb
 
-Análises para relatório.
+Repositório template para novas análises e modelagens da Transparência Brasil.
 
-## Para desenvolver
 
-Dados vão em `data`. Opcionalmente, crie subdiretórios para dados brutos com o nome `data/raw` ou para dados prontos para análise com o nome `data/ready`. Dados temporários podem ser colocados em `data/temp` (incluído no `.gitignore`).
+## Organização deste repositório
 
-Código para obter dados (e colocá-los em `data` ou `data/raw`) e transformar dados (colocando-os em `data` ou `data/ready`), assim como funções reusáveis vão em `src/`.
+```
+r-template-tb/
+├── data/           -> Diretório que contém dados ou subdiretórios específicos (ex: `data/raw`).
+├── docs/           -> Contém subsets de dados gerados durante a análise
+├── src/            -> Scripts reusáveis de suporte para filtragem e/ou tratamento de dados
+├── .gitignore      -> Arquivos ou extensões a serem ignoradas no envio ao GitHub
+├── LICENSE         -> Licença utilizada para o repositório
+└── r-template-tb.Rproj   -> Indica a raiz do projeto e informações prévias
+```
 
-Relatórios que usam dados prontos ficam em `reports/`. Coloque o html de versões para publicação em `docs/` e eles estarão disponíveis [na página do projeto](https://transparencia-brasil.github.io/r-template-tb/). Não coloque o html dos relatórios em `reports/`.
+
+### Dicas para desenvolver
+
+* Opcionalmente, crie subdiretórios dentro de `/data` a fim de facilitar a organização. Por exemplo, para dados brutos `data/raw`, ou para dados prontos para análise com o nome `data/ready`. Dados temporários podem ser colocados em `data/temp` (incluído no `.gitignore`).
+
+* Relatórios que usam dados prontos ficam em `docs/`. Coloque o html de versões para publicação em `docs/` e eles estarão disponíveis [na página do projeto](https://transparencia-brasil.github.io/r-template-tb/). Existem templates para arquivos `rmd` e `qmd`.
+
+* Utilize numeração de arquivos para manter o código em um ordem, exemplo: `src/00-plot-aesthetics.R`, `src/01-download-raw-data.R`.
