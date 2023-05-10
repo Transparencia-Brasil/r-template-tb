@@ -1,0 +1,329 @@
+---
+title: "Utilização do bot RepLai"
+subtitle: "de 2021 a 2023"
+author: "Talita Lôbo"
+date: "today"
+date-format: "D.MMM.YYYY"
+date-modified: "last-modified"
+lang: pt-BR
+format:
+  html:
+    html-math-method: katex
+    css: style.css
+    anchor-sections: true
+    code-fold: true
+    code-tools: true
+    code-link: true
+    code-line-numbers: true
+    code-background: false
+    code-summary: "Código"
+    toc: true
+    toc-title: "Índice"
+    toc-depth: 4
+    toc-float: false
+    toc-collapsed: false
+    footnotes-hover: true
+    smooth-scroll: true
+    fig-width: 11
+    fig-height: 7
+    search: true
+    embed-resources: true
+    theme:
+          light: cosmo
+          dark: darkly
+knitr:
+  opts_chunk:
+    echo: true
+    collapse: true
+    message: false
+    warning: false
+    comment: "#>"
+editor_options:
+  chunk_output_type: console
+execute:
+  cache: false
+---
+
+```{r}
+#| label: libs-and-sources
+library(tidyverse)
+library(here)
+library(DT)
+library(plotly)
+library(tidylog)
+library(tidyr)
+
+source(here("src/00-plot-aesthetics.R"), encoding = "utf-8")
+options(scipen = 9999)
+```
+
+## Resumo
+
+Neste relatório iremos analisar o histórico de uso do chatbot desenvolvido para o projeto *Achados e Pedidos*, o *RepLai*. 
+
+Principais resultados:
+
+- O uso do bot caiu consideravelmente em seu segundo ano de existência
+- O período entre outubro e novembro de 2021 teve o maior número de usuários ativos e também o maior pico de mensagens trocadas entre bot e usuários
+
+- Os 2 usuários mais frequentes utilizaram o bot por cerca de 1 ano
+
+
+
+## Análise
+
+
+### Dicionário de Dados
+
+O dicionário de dados está disponível abaixo:
+
+- Bot: Indicador do bot analisado
+
+- Canal: Canal pelo qual as mensagens foram trafegadas nas interações com os usuários
+
+- Data: Data em que os dados foram coletados 
+
+- Ano_Mes: Ano-Mês em que os dados foram coletados 
+
+- Primeira_Data: Primeira data no período selecionado para a qual foram registradas mensagens dentro do bot/canal
+
+- Ultima_Data: Ultima data no período selecionado para a qual foram registradas mensagens dentro do bot/canal
+
+- UsuariosAtivos: Volume de usuários ativos registrados (MAUs/DAUs)
+
+- UsuariosEngajados: Volume de usuários engajados registrados (MEUs/DEUs)
+
+- Mensagens_Enviadas_Bot: Quantidade de total de mensagens enviadas pelo bot na plataforma
+
+- Mensagens_Enviadas_Usuarios: Quantidade de total de mensagens enviadas pelo usuário para o bot
+
+- Mensagens_Enviadas_Total: Quantidade de total de mensagens trafegadas no bot
+
+- Com_Testers: Indica se os cálculos foram realizados incluindo os usuários de teste true(verdadeiro) ou não false (falso)
+
+<br>
+
+```{r}
+#| label: print-dataset
+acumulado_2020_2021 <- read_csv(here("data/bot81_Users_Acumulados_Total_2020-12-01_2021-12-31.csv"))
+acumulado_2022_2023 <- read_csv(here("data/bot81_Users_Acumulados_Total_2022-01-01_2023-01-16.csv"))
+
+usuarios_acumulado <- rbind(acumulado_2020_2021, acumulado_2022_2023)
+rm(acumulado_2020_2021, acumulado_2022_2023)
+
+
+detalhamento_2020_2021 <- read_csv(here("data/bot81_Users_Acumulados_Detalhamento_2020-12-10_2021-12-31.csv"))
+detalhamento_2022_2023 <- read_csv(here("data/bot81_Users_Acumulados_Detalhamento_2022-01-01_2023-01-16.csv"))
+
+detalhamento <- rbind(detalhamento_2020_2021, detalhamento_2022_2023)
+rm(detalhamento_2020_2021, detalhamento_2022_2023)
+```
+
+<br>
+
+Dispomos do acumulado de interações por mês e ano:
+
+```{r}
+usuarios_acumulado %>% 
+  datatable(rownames = FALSE,
+            filter = "top",
+            escape = FALSE,
+            options = list(pageLength = 3, searchHighlight = TRUE))
+```
+
+
+<br>
+
+E também do detalhamento de interações por usuário:
+
+```{r}
+detalhamento %>% 
+  datatable(rownames = FALSE,
+            filter = "top",
+            escape = FALSE,
+            options = list(pageLength = 3, searchHighlight = TRUE))
+```
+
+<br>
+<br>
+
+
+Pré-processamento:
+
+* Remoção de dados referentes a interações teste.
+
+```{r}
+usuarios_acumulado <- usuarios_acumulado %>% 
+  filter(Com_Testers != "TRUE") %>% 
+  mutate(Primeira_Data = as.Date(Primeira_Data)) %>% 
+  rowwise() %>% 
+  mutate(ano = str_split(Ano_Mes, "-")[[1]][1])
+
+detalhamento <- detalhamento %>% 
+  filter(Usuario_Tester != "TRUE") %>% 
+  mutate(Primeira_Data = as.Date(Primeira_Data))
+```
+
+
+<br>
+
+### Interações Acumuladas
+
+
+```{r}
+#| label: plot-mensagensano
+
+usuarios_acumulado %>% 
+  group_by(ano) %>% 
+  summarise(TotalMensagens = sum(Mensagens_Enviadas_Total)) %>%
+  ggplot(aes(ano, TotalMensagens)) +
+    geom_bar(stat = "identity") +
+  labs(title = "Total de Mensagens Trocadas",
+       subtitle = "por ano",
+       caption = "Fonte: BLIP")
+```
+
+
+
+```{r}
+#| label: plot-usuariosativos
+
+act_users <- usuarios_acumulado %>% 
+  ggplot(aes(x = Primeira_Data, UsuariosAtivos)) +
+  geom_line() +
+  labs(x = "Data Primeira Interação", y = "",
+       title = "Usuários Ativos ao longo dos anos",
+       subtitle = "2020 a 2023",
+       caption = "Fonte: BLIP")
+
+ggplotly(act_users)
+```
+
+
+No dado repassado pela BLIP, o número de Usuários Ativos é igual ao número de Usuários Engajados.
+
+
+```{r}
+#| label: reshape-acumulado
+
+mensagens_enviadas <- gather(usuarios_acumulado %>% 
+                               select(Primeira_Data, Mensagens_Enviadas_Bot, 
+                                      Mensagens_Enviadas_Usuarios, Mensagens_Enviadas_Total),
+                             "Tipo", "value", -Primeira_Data)
+```
+
+
+```{r}
+#| label: plot-acumulado-messages
+
+total_messages <- ggplot(mensagens_enviadas, aes(Primeira_Data, value, colour = Tipo)) +
+  geom_line() +
+  labs(x = "Data Primeira Interação", y = "",
+       title = "Mensagens Enviadas pelo RepLai",
+       subtitle = "Total entre 2020 a 2023",
+       caption = "Fonte: BLIP") +
+  theme(legend.position = "bottom")
+
+total_messages
+```
+
+```{r}
+#| label: plot-acumulado-messages2
+
+ggplotly(total_messages)
+```
+
+<br>
+
+
+### Interações por usuário
+
+
+```{r}
+#| label: usuarios-frequentes
+
+usuarios_frequentes <- detalhamento %>% 
+  group_by(ID_do_Usuário) %>% 
+  summarise(quantidade_interacoes = n()) 
+
+usuarios_frequentes %>% 
+  arrange(-quantidade_interacoes) %>% 
+  datatable(rownames = FALSE,
+            filter = "top",
+            escape = FALSE,
+            options = list(pageLength = 10, searchHighlight = TRUE))
+```
+
+<br>
+
+
+* O usuário mais frequente, com 15 momentos de interação com o bot nos anos analisados é Jonas (5521988528375) :P
+* O número 5511993717191 pertence a Marina e o 5511972430693 a Juliana
+
+
+Removendo essas interações, restam:
+
+```{r}
+#| label: tabela-usuarios
+
+usuarios_frequentes %>% 
+  filter(ID_do_Usuário != "5521988528375" &
+           ID_do_Usuário != "5511993717191" &
+           ID_do_Usuário != "5511972430693") %>% 
+  arrange(-quantidade_interacoes) %>% 
+  datatable(rownames = FALSE,
+            filter = "top",
+            escape = FALSE,
+            options = list(pageLength = 10, searchHighlight = TRUE))
+```
+
+<br>
+<br>
+
+Assim, usuário mais frequente em número de interações entre 2020 e 2023 com o repLai é **5511999197879**.
+
+Filtrando as interações desse usuário específico:
+
+```{r}
+#| label: top1-user
+
+top1_user <- detalhamento %>% 
+  filter(ID_do_Usuário == "5511999197879") %>% 
+  ggplot(aes(x = Primeira_Data, Mensagens_Enviadas_Total)) +
+  geom_line() +
+  labs(x = "Data Primeira Interação", y = "",
+       title = "Total de Mensagens - Usuário 5511999197879",
+       subtitle = "Total enter 2020 a 2023",
+       caption = "Fonte: BLIP")
+
+ggplotly(top1_user)
+```
+
+E também do segundo mais frequente:
+
+```{r}
+#| label: top2-user
+
+top2_user <- detalhamento %>% 
+  filter(ID_do_Usuário == "5521976651022") %>% 
+  ggplot(aes(x = Primeira_Data, Mensagens_Enviadas_Total)) +
+  geom_line() +
+  labs(x = "Data Primeira Interação", y = "",
+       title = "Total de Mensagens - Usuário 5521976651022",
+       subtitle = "Total enter 2020 a 2023",
+       caption = "Fonte: BLIP")
+
+ggplotly(top2_user)
+```
+
+<br>
+
+::: {.callout-note}
+Elementos de alguns gráficos foram suprimidos (subtítulo, caption) em detrimento do uso de interatividade.
+:::
+
+
+
+## Referências
+
+* Os dados utilizados nesta análise foram enviados pela Take BLIP através de solicitação no suporte ao cliente e estão disponíveis [neste link](https://drive.google.com/drive/folders/1vEKCwlTPfG-lQU34Bps-xWOF1Y2Fhd87).
