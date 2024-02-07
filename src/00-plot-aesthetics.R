@@ -33,26 +33,10 @@ theme_update(
 
 # helper functions:
 
-reais <- function(x) {
-  scales::dollar(
-    x,
-    prefix = "R$ ",
-    accuracy = 1.0,
-    big.mark = ".",
-    decimal.mark = ","
-  )
-}
-
-reais_milhoes <- function(x) {
-  scales::number(
-    x / 1e6,
-    prefix = "R$ ",
-    big.mark = ".",
-    decimal.mark = ",",
-    suffix = "Mi",
-    accuracy = 0.100
-  )
-}
+# funções auxiliares
+reais <- function(...) scales::dollar(..., big.mark = ".", decimal.mark = ",", prefix = "R$ ")
+numero <- function(...) scales::number(..., big.mark = ".", decimal.mark = ",")
+perc <- function(...) scales::percent(..., big.mark = ".", decimal.mark = ",")
 
 hrbrthemes::update_geom_font_defaults(
   color = "gray30",
