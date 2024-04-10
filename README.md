@@ -50,6 +50,11 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 │   │   ├── outputs    -> Objeto resultado da execução da tarefa
 │   │   ├── src        -> Códigos que executam a tarefa
 │   │   └── tmp        -> Não é obrigatório
+│   ├── task2/         
+│   │   ├── inputs     
+│   │   ├── outputs    
+│   │   ├── src        
+│   │   └── tmp        
 ├── docs               -> Contém html de relatórios para que fiquem disponíveis no github.io
 ├── project.rproj      -> Indica a raiz do projeto e informações prévias
 ├── replica.md         -> Contém principalmente a ordem em que as tarefas devem ser executadas
