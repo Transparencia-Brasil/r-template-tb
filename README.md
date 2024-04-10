@@ -34,7 +34,7 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
   
   * Crie subdiretórios dentro de `/data` a fim de facilitar a organização. Por exemplo, se o projeto usa um arquivo de mapa dos estados brasileiros, use uma pasta `source` para armazenar tais arquivos. 
   
-  * Cada pasta `source` contém necessariamente um arquivo `info.txt` indicando a fonte do arquivo. Isso é essencial já que os arquivos em `data` não são criados pelo projeto.
+  * Cada pasta `source` contém necessariamente um arquivo `info.md` indicando a fonte do arquivo. Isso é essencial já que os arquivos em `data` não são criados pelo projeto.
 
 * Docs: coloque o html de versões para publicação em `docs/` e eles estarão disponíveis na página do projeto que terá endereço em https://transparencia-brasil.github.io/nome-do-projeto/. A pasta contém templates para arquivos `rmd` e `qmd` para facilitar.
 
