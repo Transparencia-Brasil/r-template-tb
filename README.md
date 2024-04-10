@@ -67,7 +67,7 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 
 * Não é aconselhável numerar arquivos e pastas, pois conforme o projeto acontece pode ser necessário criar um script ou pasta no meio de outros e será preciso renumerar todos os subsequentes. Isso pode ser trabalhoso em projetos grandes além de gerar quebras em comandos de source dentro de scripts.
 
-* Lembre sempre de refatorar o seu código antes de todo commit. Cada código precisará ser revisado por outras pessoas do time que precisam entender o que foi feito para conseguir propor melhorias.
+* Lembre sempre de refatorar o seu código antes de todo commit, pois cada código precisará ser revisado por outras pessoas do time. Refatorar inclui fazer melhorias específicas no código existente, tornando-o mais legível, mais eficiente e mais fácil de manter, sem alterar sua funcionalidade.
 
 ### Referências 
 
