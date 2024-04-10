@@ -14,6 +14,8 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 
 * Setup: Contém arquivos que definem configurações, dependências, e macros no projeto.
 
+* Replica.md: Contém principalmente a ordem em que as tarefas devem ser executadas.
+
 * Tasks
   
   * Pastas para execução de tarefas específicas.
@@ -37,26 +39,23 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 * Docs: coloque o html de versões para publicação em `docs/` e eles estarão disponíveis na página do projeto que terá endereço em https://transparencia-brasil.github.io/nome-do-projeto/. A pasta contém templates para arquivos `rmd` e `qmd` para facilitar.
 
 ```
-r-template-tb/
-├── setup/              -> Contém arquivos que definem configurações, dependências, e macros no projeto.
-├── data/               -> Dados que vieram de fora do projeto, não foram processados por scripts nossos.
-  ├── source1
-  ├── source2
-├── task1/              -> Pasta que executa uma tarefa específica (ex: wrangling). 
-  ├── inputs
-  ├── outputs
-  ├── src
-  ├── tmp
-├── task2/              -> Pasta que executa uma tarefa específica (ex: analysis)
-  ├── inputs
-  ├── outputs
-  ├── src
-  ├── tmp
-├── docs/               -> Contém html de relatórios para que fiquem disponíveis no github.io
-├── .gitignore          -> Arquivos ou extensões a serem ignoradas no envio ao GitHub
-├── LICENSE             -> Licença utilizada para o repositório
-└── template-tb.Rproj   -> Indica a raiz do projeto e informações prévias
-└── replica.md          -> Contém principalmente a ordem em que as tarefas devem ser executadas
+.
+├── setup              -> Contém arquivos que definem configurações, dependências, e macros no projeto.
+├── data/              -> Armeza dados de uma fonte externa que não foi processada por script do projeto
+│   ├── source1        
+│   └── source2        
+├── tasks/        
+│   ├── task1/         -> Executa uma tarefa específica
+│   │   ├── inputs     -> Não é obrigatório
+│   │   ├── outputs    -> Objeto resultado da execução da tarefa
+│   │   ├── src        -> Códigos que executam a tarefa
+│   │   └── tmp        -> Não é obrigatório
+├── docs               -> Contém html de relatórios para que fiquem disponíveis no github.io
+├── project.rproj      -> Indica a raiz do projeto e informações prévias
+├── replica.md         -> Contém principalmente a ordem em que as tarefas devem ser executadas
+├── .gitignore         -> Arquivos ou extensões a serem ignoradas no envio ao GitHub
+├── LICENSE            -> Licença utilizada para o repositório
+└── README             -> Guia para execução dos projetos 
 ```
 
 ## Dicas para desenvolver
