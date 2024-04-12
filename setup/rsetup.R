@@ -1,17 +1,4 @@
 
-# packages --------------------------------------------------------------------
-
-library(tidyverse)
-library(tidylog)
-library(ggplot2)
-library(ggpubr)
-library(here)
-library(yaml)
-
-# macros ----------------------------------------------------------------------
-
-macros <- yaml.load_file(here('setup/macros.yaml'))
-
 # color pallet ----------------------------------------------------------------
 
 # cores tb logo
@@ -33,7 +20,7 @@ cores_aep <- c(
 
 # ggplot theme customization --------------------------------------------------
 
-theme_set(theme_pubclean())
+ggplot2::theme_set(ggpubr::theme_pubclean())
 
 theme_update(
   legend.position = 'bottom', 

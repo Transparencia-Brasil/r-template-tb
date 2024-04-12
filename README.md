@@ -1,8 +1,22 @@
+
+# Objetivo 
+
+Descrever o objetivo do projeto sendo versionado neste repositório (qual o produto final do repo?).
+
+# Replicação
+
+Escrever aqui anotações importantes para replicação do projeto. Incluindo a ordem em que as tasks devem ser executadas. 
+
+* Task1 - Descrição breve.
+* Task2 - Descrição breve.
+
+# Responsável 
+
+Deixar o link para o perfil no git do responsável principal pelo projeto.
+
+--- 
+
 # repo-template-tb
-
-Repositório template para novos projetos de dados da Transparência Brasil.
-
-## Introdução
 
 A estrutura de pastas proposta nesse repositório segue o conceito de modularização. 
 
@@ -12,9 +26,7 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 
 ## Organização do repositório 
 
-* Setup: Contém arquivos que definem configurações, dependências, e macros no projeto.
-
-* Replica.md: Contém principalmente a ordem em que as tarefas devem ser executadas.
+* Setup: Contém arquivos que definem configurações no projeto. Além do setup para o R pode conter um arquivo yaml também que defina macros do projeto, entre outros exemplos que se mostrem necessários.
 
 * Tasks
   
@@ -57,10 +69,9 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 │   │   └── tmp        
 ├── docs               -> Contém html de relatórios para que fiquem disponíveis no github.io
 ├── project.rproj      -> Indica a raiz do projeto e informações prévias
-├── replica.md         -> Contém principalmente a ordem em que as tarefas devem ser executadas
 ├── .gitignore         -> Arquivos ou extensões a serem ignoradas no envio ao GitHub
 ├── LICENSE            -> Licença utilizada para o repositório
-└── README             -> Guia para execução dos projetos 
+└── README             -> Info sobre o projeto e guia para sua replicação 
 ```
 
 ## Dicas para desenvolver
@@ -78,3 +89,4 @@ https://web.stanford.edu/~gentzkow/research/CodeAndData.pdf
 https://hrdag.org/2016/06/14/the-task-is-a-quantum-of-workflow/
 
 https://www.amazon.com.br/Software-Engineering-Data-Scientists-Notebooks/dp/1098136209
+
