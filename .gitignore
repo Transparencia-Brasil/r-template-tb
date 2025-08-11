@@ -34,3 +34,6 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+/.quarto/
+.vscode/settings.json
