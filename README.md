@@ -103,6 +103,6 @@ A estrutura de pastas proposta nesse repositório segue o conceito de modulariza
 
 <https://www.amazon.com.br/Software-Engineering-Data-Scientists-Notebooks/dp/1098136209>
 
-[![Creative Commons BY 4.0](https://licensebuttons.net/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
-
 [![Transparência Brasil](https://www.transparencia.org.br/img/logos/logo-tb.svg)](https://www.transparencia.org.br/)
+
+[![Creative Commons BY 4.0](https://licensebuttons.net/l/by/4.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/)
