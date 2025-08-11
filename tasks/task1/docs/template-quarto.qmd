@@ -1,7 +1,11 @@
 ---
-title: "Inserir título"
+title: |
+  <img src="https://github.com/Transparencia-Brasil/transparencia.org.br/blob/master/webroot/favicon.png?raw=true" width="40" alt="Favicon Transparência Brasil">
+  Inserir título
 subtitle: "Inserir subtítulo"
 author: "Inserir autor"
+institute: |
+  | Transparência Brasil
 date: "today"
 date-format: "D.MMM.YYYY"
 date-modified: "last-modified"
@@ -20,6 +24,13 @@ format:
     toc: true
     toc-title: "Índice"
     toc-depth: 4
+    other-links:
+      # - text: Mais relatórios
+      #   icon: file-bar-graph
+      #   href: https://transparencia-brasil.github.io/r-template-tb/
+      - text: Repositório no GitHub
+        icon: github
+        href: https://github.com/Transparencia-Brasil/ # adicionar repositório
     toc-float: false
     toc-collapsed: false
     footnotes-hover: true
